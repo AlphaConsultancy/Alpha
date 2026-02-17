@@ -298,7 +298,7 @@ const About = () => {
               viewport={{ once: true }}
               className="col-span-1 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional workshop" />
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional workshop at Alpha Consultancy office in Ahmedabad" />
             </motion.div>
 
             <motion.div
@@ -308,7 +308,7 @@ const About = () => {
               transition={{ delay: 0.1 }}
               className="col-span-1 lg:col-span-6 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Team meeting" />
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Team meeting and collaboration session at Alpha Consultancy" />
             </motion.div>
 
             <motion.div
@@ -318,7 +318,7 @@ const About = () => {
               transition={{ delay: 0.2 }}
               className="col-span-2 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Success story" />
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Alpha Consultancy success story: individual achieving career goals" />
             </motion.div>
 
             {/* Middle Row: Left Images + Central Video + Right Images */}
@@ -329,10 +329,10 @@ const About = () => {
               className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4"
             >
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Corporate training" />
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Corporate training session for job placement in Ahmedabad" />
               </div>
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Resource center" />
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Alpha Consultancy resource center training students for future jobs" />
               </div>
             </motion.div>
 
@@ -393,10 +393,10 @@ const About = () => {
               className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-6"
             >
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Office environment" />
+                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Modern office environment for high-end professional development" />
               </div>
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Leadership coaching" />
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Leadership coaching and career navigation with Alpha Consultancy" />
               </div>
             </motion.div>
 
@@ -408,7 +408,7 @@ const About = () => {
               transition={{ delay: 0.3 }}
               className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1454165833202-d196c735afe1?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Data analysis" />
+              <img src="https://images.unsplash.com/photo-1454165833202-d196c735afe1?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Data-driven career analysis at Alpha Consultancy" />
             </motion.div>
 
             <motion.div
@@ -418,7 +418,7 @@ const About = () => {
               transition={{ delay: 0.4 }}
               className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Community support" />
+              <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Community support and networking at Alpha Consultancy" />
             </motion.div>
 
             <motion.div
@@ -428,7 +428,7 @@ const About = () => {
               transition={{ delay: 0.5 }}
               className="col-span-2 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Presentation" />
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional presentation on career strategies with Alpha Consultancy mentors" />
             </motion.div>
           </div>
         </div>
