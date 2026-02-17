@@ -21,57 +21,8 @@ const InteractiveShatterSphere = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Generate perfected Alpha logo positions
-  const generateLogoPositions = (count: number) => {
-    const positions = new Float32Array(count * 3);
-    const scale = isMobile ? 2.8 : 3.8;
-
-    for (let i = 0; i < count; i++) {
-      const type = Math.random();
-      let x = 0, y = 0, z = 0;
-
-      if (type < 0.2) { // Outer Circle
-        const angle = Math.random() * Math.PI * 2;
-        const r = scale * 1.05 + (Math.random() - 0.5) * 0.05;
-        x = Math.cos(angle) * r;
-        y = Math.sin(angle) * r;
-        z = (Math.random() - 0.5) * 0.08;
-      } else if (type < 0.5) { // Left Slanted Bar
-        const t = Math.random();
-        const thickness = (isMobile ? 0.45 : 0.6) * (1 - t * 0.4);
-        const offset = (Math.random() - 0.5) * thickness;
-        x = THREE.MathUtils.lerp(-scale * 0.42, 0, t) + offset;
-        y = THREE.MathUtils.lerp(-scale * 0.5, scale * 0.7, t);
-        z = (Math.random() - 0.5) * 0.15;
-      } else if (type < 0.8) { // Right Slanted Bar
-        const t = Math.random();
-        const thickness = (isMobile ? 0.45 : 0.6) * (1 - t * 0.4);
-        const offset = (Math.random() - 0.5) * thickness;
-        x = THREE.MathUtils.lerp(scale * 0.42, 0, t) + offset;
-        y = THREE.MathUtils.lerp(-scale * 0.5, scale * 0.7, t);
-        z = (Math.random() - 0.5) * 0.15;
-      } else if (type < 0.92) { // Crossbar
-        const t = Math.random();
-        x = THREE.MathUtils.lerp(-scale * 0.25, scale * 0.25, t);
-        y = -scale * 0.12 + (Math.random() - 0.5) * 0.28;
-        z = (Math.random() - 0.5) * 0.12;
-      } else { // Peak Fill
-        const t = Math.random();
-        x = (Math.random() - 0.5) * 0.3;
-        y = THREE.MathUtils.lerp(scale * 0.45, scale * 0.7, t);
-        z = (Math.random() - 0.5) * 0.1;
-      }
-
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
-      positions[i * 3 + 2] = z;
-    }
-    return positions;
-  };
-
-  const [spherePositions, logoPositions, currentPositions, velocities] = useMemo(() => {
+  const [spherePositions, currentPositions, velocities] = useMemo(() => {
     const sphere = new Float32Array(particleCount * 3);
-    const logo = generateLogoPositions(particleCount);
     const curr = new Float32Array(particleCount * 3);
     const vels = new Float32Array(particleCount * 3);
 
@@ -87,7 +38,7 @@ const InteractiveShatterSphere = () => {
       curr[i * 3 + 2] = sphere[i * 3 + 2];
       vels[i * 3] = 0; vels[i * 3 + 1] = 0; vels[i * 3 + 2] = 0;
     }
-    return [sphere, logo, curr, vels];
+    return [sphere, curr, vels];
   }, [particleCount, isMobile]);
 
   const tempVec = useMemo(() => new THREE.Vector3(), []);
@@ -109,8 +60,8 @@ const InteractiveShatterSphere = () => {
     pointsRef.current.position.x = THREE.MathUtils.lerp(pointsRef.current.position.x, targetX, 0.12);
     pointsRef.current.position.y = THREE.MathUtils.lerp(pointsRef.current.position.y, targetY, 0.12);
 
-    const rotationSpeed = 0.001 * Math.max(0, 1 - transitionProgress * 1.5);
-    pointsRef.current.rotation.y += rotationSpeed;
+    // Constant elegant rotation
+    pointsRef.current.rotation.y += 0.001 + (transitionProgress * 0.001);
 
     tempVec.set(
       (state.mouse.x * state.viewport.width) / 2,
@@ -147,9 +98,9 @@ const InteractiveShatterSphere = () => {
         }
       }
 
-      const tX = THREE.MathUtils.lerp(spherePositions[idx], logoPositions[idx], transitionProgress);
-      const tY = THREE.MathUtils.lerp(spherePositions[idx + 1], logoPositions[idx + 1], transitionProgress);
-      const tZ = THREE.MathUtils.lerp(spherePositions[idx + 2], logoPositions[idx + 2], transitionProgress);
+      const tX = spherePositions[idx];
+      const tY = spherePositions[idx + 1];
+      const tZ = spherePositions[idx + 2];
 
       velocities[idx] += (tX - px) * 0.08;
       velocities[idx + 1] += (tY - py) * 0.08;
@@ -167,8 +118,7 @@ const InteractiveShatterSphere = () => {
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
 
     const material = pointsRef.current.material as THREE.PointsMaterial;
-    material.size = (isMobile ? 0.03 : 0.04) + (transitionProgress * 0.016);
-    material.opacity = 0.85 + (transitionProgress * 0.1);
+    material.size = (isMobile ? 0.03 : 0.04) + (transitionProgress * 0.012);
   });
 
   return (
