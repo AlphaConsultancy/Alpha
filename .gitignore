@@ -45,7 +45,7 @@ Thumbs.db
 desktop.ini
 
 # Large Media
-*.mp4
+# *.mp4 (Enabled for Alpha-Consultancy.mp4)
 
 # Project Specific
 .gemini

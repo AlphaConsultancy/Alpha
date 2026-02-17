@@ -350,6 +350,7 @@ const About = () => {
                 src="/Alpha-Consultancy.mp4"
                 className={`w-full h-full object-cover transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-60 group-hover:scale-105 group-hover:opacity-40'}`}
                 preload="metadata"
+                muted
                 loop
                 playsInline
               />
