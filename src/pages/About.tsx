@@ -290,15 +290,15 @@ const About = () => {
             description="Moments of professional transformation and corporate excellence."
           />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-6 auto-rows-[120px] md:auto-rows-[180px] lg:auto-rows-[200px]">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-6 auto-rows-[160px] md:auto-rows-[180px] lg:auto-rows-[200px]">
             {/* Top Row Images */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-1 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1557426272-fc759fbb7a8d?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional workshop" />
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional workshop" />
             </motion.div>
 
             <motion.div
@@ -306,9 +306,9 @@ const About = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="lg:col-span-6 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-1 lg:col-span-6 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Team meeting" />
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Team meeting" />
             </motion.div>
 
             <motion.div
@@ -316,9 +316,9 @@ const About = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-2 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Success story" />
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Success story" />
             </motion.div>
 
             {/* Middle Row: Left Images + Central Video + Right Images */}
@@ -326,31 +326,30 @@ const About = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="hidden lg:flex lg:col-span-3 lg:row-span-2 flex-col gap-4 md:gap-6"
+              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4"
             >
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Corporate training" />
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Corporate training" />
               </div>
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Resource center" />
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Resource center" />
               </div>
             </motion.div>
 
-            {/* Central Video Anchor */}
+            {/* Central Video Anchor - Prominent Standing Portrait Layout */}
             <motion.div
               initial={{ opacity: 0, scale: 1.1 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="col-span-2 md:col-span-4 lg:col-span-6 lg:row-span-2 rounded-[40px] overflow-hidden border border-primary/20 bg-black relative group cursor-pointer shadow-2xl shadow-primary/10"
+              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-4 rounded-[32px] md:rounded-[40px] overflow-hidden border border-primary/20 bg-black relative group cursor-pointer shadow-2xl shadow-primary/10"
               onClick={togglePlay}
             >
               <video
                 ref={videoRef}
-                src="/success-video.mp4"
-                poster="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070"
+                src="/Alpha-Consultancy.mp4"
                 className={`w-full h-full object-cover transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-60 group-hover:scale-105 group-hover:opacity-40'}`}
-                muted
+                preload="metadata"
                 loop
                 playsInline
               />
@@ -383,7 +382,7 @@ const About = () => {
               )}
 
               <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-60 group-hover:opacity-100'}`}>
-                <span className="text-[10px] uppercase tracking-widest font-bold text-white">Our Success Journey</span>
+                <span className="text-[10px] uppercase tracking-widest font-bold text-white">Success Journey</span>
               </div>
             </motion.div>
 
@@ -391,13 +390,13 @@ const About = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="hidden lg:flex lg:col-span-3 lg:row-span-2 flex-col gap-4 md:gap-6"
+              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-6"
             >
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=2074" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Office environment" />
+                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Office environment" />
               </div>
               <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Leadership coaching" />
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Leadership coaching" />
               </div>
             </motion.div>
 
@@ -407,9 +406,9 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Data analysis" />
+              <img src="https://images.unsplash.com/photo-1454165833202-d196c735afe1?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Data analysis" />
             </motion.div>
 
             <motion.div
@@ -417,9 +416,9 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Community support" />
+              <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Community support" />
             </motion.div>
 
             <motion.div
@@ -427,9 +426,9 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
+              className="col-span-2 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
             >
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Presentation" />
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Presentation" />
             </motion.div>
           </div>
         </div>

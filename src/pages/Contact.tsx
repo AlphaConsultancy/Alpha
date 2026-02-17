@@ -95,9 +95,27 @@ const Contact = () => {
     mode: "", message: "", agree: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you! Our team will contact you within 24 hours.");
+
+    const form = e.target as HTMLFormElement;
+    const body = new URLSearchParams(new FormData(form) as any).toString();
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+      alert("Success! High-impact consultation request received. Our team will contact you within 24 hours.");
+      setFormData({
+        firstName: "", lastName: "", email: "", phone: "",
+        ageGroup: "", consultationType: "", date: "", time: "",
+        mode: "", message: "", agree: false,
+      });
+    } catch (error) {
+      alert("Mission error: Could not transmit data. Please try again or direct-dial us.");
+    }
   };
 
   const inputClass = "w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-foreground font-body text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all backdrop-blur-md";
@@ -164,16 +182,23 @@ const Contact = () => {
               <div className="relative z-10">
                 <h2 className="font-display text-3xl font-black text-foreground mb-8 tracking-tighter">Strategic Session <span className="text-primary italic">Request</span></h2>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  <input type="hidden" name="form-name" value="contact" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className={labelClass}>First Name</label>
-                      <input type="text" required className={inputClass} placeholder="Enter first name"
+                      <input type="text" name="firstName" required className={inputClass} placeholder="Enter first name"
                         value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                     </div>
                     <div>
                       <label className={labelClass}>Last Name</label>
-                      <input type="text" required className={inputClass} placeholder="Enter last name"
+                      <input type="text" name="lastName" required className={inputClass} placeholder="Enter last name"
                         value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} />
                     </div>
                   </div>
@@ -181,12 +206,12 @@ const Contact = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className={labelClass}>Email Identification</label>
-                      <input type="email" required className={inputClass} placeholder="your@email.com"
+                      <input type="email" name="email" required className={inputClass} placeholder="your@email.com"
                         value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                     </div>
                     <div>
                       <label className={labelClass}>Direct Phone</label>
-                      <input type="tel" required className={inputClass} placeholder="+91 XXXXXXXXXX"
+                      <input type="tel" name="phone" required className={inputClass} placeholder="+91 XXXXXXXXXX"
                         value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
                     </div>
                   </div>
@@ -194,7 +219,7 @@ const Contact = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className={labelClass}>Demographic Filter</label>
-                      <select required className={inputClass}
+                      <select name="ageGroup" required className={inputClass}
                         value={formData.ageGroup} onChange={(e) => setFormData({ ...formData, ageGroup: e.target.value })}>
                         <option value="" className="bg-navy">Select age group</option>
                         {ageGroups.map((g) => <option key={g} value={g} className="bg-navy">{g}</option>)}
@@ -202,7 +227,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <label className={labelClass}>Consultation Pathway</label>
-                      <select required className={inputClass}
+                      <select name="consultationType" required className={inputClass}
                         value={formData.consultationType} onChange={(e) => setFormData({ ...formData, consultationType: e.target.value })}>
                         <option value="" className="bg-navy">Select pathway</option>
                         {consultationTypes.map((t) => <option key={t} value={t} className="bg-navy">{t}</option>)}
@@ -213,12 +238,12 @@ const Contact = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <label className={labelClass}>Strategic Date</label>
-                      <input type="date" required className={inputClass}
+                      <input type="date" name="date" required className={inputClass}
                         value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
                     </div>
                     <div>
                       <label className={labelClass}>Timeline Slot</label>
-                      <select required className={inputClass}
+                      <select name="time" required className={inputClass}
                         value={formData.time} onChange={(e) => setFormData({ ...formData, time: e.target.value })}>
                         <option value="" className="bg-navy">Select time</option>
                         {timeSlots.map((t) => <option key={t} value={t} className="bg-navy">{t}</option>)}
@@ -226,7 +251,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <label className={labelClass}>Meeting Interface</label>
-                      <select required className={inputClass}
+                      <select name="mode" required className={inputClass}
                         value={formData.mode} onChange={(e) => setFormData({ ...formData, mode: e.target.value })}>
                         <option value="" className="bg-navy">Select interface</option>
                         <option value="online" className="bg-navy">Online Interface</option>
@@ -238,7 +263,7 @@ const Contact = () => {
 
                   <div>
                     <label className={labelClass}>Mission Objectives & Goals</label>
-                    <textarea required rows={4} className={inputClass} placeholder="Describe your career goals and current roadblocks..."
+                    <textarea name="message" required rows={4} className={inputClass} placeholder="Describe your career goals and current roadblocks..."
                       value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                   </div>
 
