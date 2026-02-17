@@ -64,15 +64,23 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-xs font-black text-white/20 uppercase tracking-[0.2em] mb-8">Headquarters</h4>
             <div className="space-y-6">
-              <a href="mailto:alphaconsultancyinc@gmail.com" className="group flex items-center gap-4 text-white/50 hover:text-white transition-all">
+              <a
+                href="mailto:alphaconsultancyinc@gmail.com"
+                aria-label="Send an email to Alpha Consultancy"
+                className="group flex items-center gap-4 text-white/50 hover:text-white transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all">
-                  <Mail size={16} className="text-primary" />
+                  <Mail size={16} className="text-primary" aria-hidden="true" />
                 </div>
                 <span className="text-xs font-bold tracking-tight">alphaconsultancyinc@gmail.com</span>
               </a>
-              <a href="tel:+919274709029" className="group flex items-center gap-4 text-white/50 hover:text-white transition-all">
+              <a
+                href="tel:+919274709029"
+                aria-label="Call Alpha Consultancy at +91 9274709029"
+                className="group flex items-center gap-4 text-white/50 hover:text-white transition-all"
+              >
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all">
-                  <Phone size={16} className="text-primary" />
+                  <Phone size={16} className="text-primary" aria-hidden="true" />
                 </div>
                 <span className="text-xs font-bold tracking-tight">+91 9274709029</span>
               </a>
@@ -80,10 +88,11 @@ const Footer = () => {
                 href="https://www.google.com/maps/dir/?api=1&destination=Alpha+Consultancy+Ahmedabad+Makarba+Road"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Get directions to Alpha Consultancy headquarters in Ahmedabad"
                 className="group flex items-center gap-4 text-white/30 hover:text-white transition-all"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all">
-                  <MapPin size={16} className="text-primary" />
+                  <MapPin size={16} className="text-primary" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Ahmedabad, Gujarat</span>
@@ -99,9 +108,14 @@ const Footer = () => {
             © {new Date().getFullYear()} Alpha Consultancy Inc. Engineering Excellence.
           </p>
           <div className="flex gap-8">
-            <a href="https://wa.me/+919274709029" target="_blank" rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-white/20 hover:text-primary text-[10px] font-black uppercase tracking-[0.2em] transition-all">
-              <div className="w-2 h-2 rounded-full bg-green-500/50 group-hover:bg-green-500 animate-pulse" />
+            <a
+              href="https://wa.me/+919274709029"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contact us on WhatsApp"
+              className="group flex items-center gap-2 text-white/20 hover:text-primary text-[10px] font-black uppercase tracking-[0.2em] transition-all"
+            >
+              <div className="w-2 h-2 rounded-full bg-green-500/50 group-hover:bg-green-500 animate-pulse" aria-hidden="true" />
               WhatsApp Interface
             </a>
           </div>

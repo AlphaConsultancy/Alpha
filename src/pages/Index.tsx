@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Target, GraduationCap, Briefcase, Rocket, Users, Globe, Star, Handshake } from "lucide-react";
-import Hero3DScene from "@/components/Hero3DScene";
+import { lazy, Suspense } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
+
+const Hero3DScene = lazy(() => import("@/components/Hero3DScene"));
 
 const services = [
   {

@@ -44,7 +44,7 @@ const ServiceCard = ({ icon, title, description, features, index }: ServiceCardP
   };
 
   return (
-    <motion.div
+    <motion.article
       ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -53,8 +53,8 @@ const ServiceCard = ({ icon, title, description, features, index }: ServiceCardP
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
+        rotateX: "ontouchstart" in window ? 0 : rotateX,
+        rotateY: "ontouchstart" in window ? 0 : rotateY,
         transformStyle: "preserve-3d",
       }}
       className="group relative backdrop-blur-xl bg-white/5 rounded-3xl border border-white/10 p-8 transition-all duration-500 overflow-hidden"
@@ -95,7 +95,7 @@ const ServiceCard = ({ icon, title, description, features, index }: ServiceCardP
 
       {/* Decorative Border Glow */}
       <div className="absolute inset-0 border border-white/5 rounded-3xl group-hover:border-primary/30 transition-colors duration-500 pointer-events-none" />
-    </motion.div>
+    </motion.article>
   );
 };
 

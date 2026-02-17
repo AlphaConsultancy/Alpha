@@ -6,49 +6,89 @@ import * as THREE from "three";
 const InteractiveShatterSphere = () => {
   const pointsRef = useRef<THREE.Points>(null);
   const { mouse, viewport } = useThree();
-  const [scrollY, setScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState(typeof window !== 'undefined' ? window.scrollY : 0);
+
+  // Responsive particle count based on device power/size
+  const isMobile = viewport.width < 5;
+  const particleCount = useMemo(() => isMobile ? 3500 : 7000, [isMobile]);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const particleCount = 4500; // Increased particle count for better density
+  // Generate perfected Alpha logo positions
+  const generateLogoPositions = (count: number) => {
+    const positions = new Float32Array(count * 3);
+    const scale = isMobile ? 2.8 : 3.8;
 
-  // Base positions and velocities
-  const [originalPositions, currentPositions, velocities] = useMemo(() => {
-    const orig = new Float32Array(particleCount * 3);
+    for (let i = 0; i < count; i++) {
+      const type = Math.random();
+      let x = 0, y = 0, z = 0;
+
+      if (type < 0.2) { // Outer Circle
+        const angle = Math.random() * Math.PI * 2;
+        const r = scale * 1.05 + (Math.random() - 0.5) * 0.05;
+        x = Math.cos(angle) * r;
+        y = Math.sin(angle) * r;
+        z = (Math.random() - 0.5) * 0.08;
+      } else if (type < 0.5) { // Left Slanted Bar
+        const t = Math.random();
+        const thickness = (isMobile ? 0.45 : 0.6) * (1 - t * 0.4);
+        const offset = (Math.random() - 0.5) * thickness;
+        x = THREE.MathUtils.lerp(-scale * 0.42, 0, t) + offset;
+        y = THREE.MathUtils.lerp(-scale * 0.5, scale * 0.7, t);
+        z = (Math.random() - 0.5) * 0.15;
+      } else if (type < 0.8) { // Right Slanted Bar
+        const t = Math.random();
+        const thickness = (isMobile ? 0.45 : 0.6) * (1 - t * 0.4);
+        const offset = (Math.random() - 0.5) * thickness;
+        x = THREE.MathUtils.lerp(scale * 0.42, 0, t) + offset;
+        y = THREE.MathUtils.lerp(-scale * 0.5, scale * 0.7, t);
+        z = (Math.random() - 0.5) * 0.15;
+      } else if (type < 0.92) { // Crossbar
+        const t = Math.random();
+        x = THREE.MathUtils.lerp(-scale * 0.25, scale * 0.25, t);
+        y = -scale * 0.12 + (Math.random() - 0.5) * 0.28;
+        z = (Math.random() - 0.5) * 0.12;
+      } else { // Peak Fill
+        const t = Math.random();
+        x = (Math.random() - 0.5) * 0.3;
+        y = THREE.MathUtils.lerp(scale * 0.45, scale * 0.7, t);
+        z = (Math.random() - 0.5) * 0.1;
+      }
+
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+    }
+    return positions;
+  };
+
+  const [spherePositions, logoPositions, currentPositions, velocities] = useMemo(() => {
+    const sphere = new Float32Array(particleCount * 3);
+    const logo = generateLogoPositions(particleCount);
     const curr = new Float32Array(particleCount * 3);
     const vels = new Float32Array(particleCount * 3);
 
-    const radius = 2.6; // Decreased sphere radius to fit better
-
+    const radius = isMobile ? 2.2 : 2.8;
     for (let i = 0; i < particleCount; i++) {
-      // Create a sphere distribution
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
-
-      const x = radius * Math.sin(phi) * Math.cos(theta);
-      const y = radius * Math.sin(phi) * Math.sin(theta);
-      const z = radius * Math.cos(phi);
-
-      orig[i * 3] = x;
-      orig[i * 3 + 1] = y;
-      orig[i * 3 + 2] = z;
-
-      curr[i * 3] = x;
-      curr[i * 3 + 1] = y;
-      curr[i * 3 + 2] = z;
-
-      vels[i * 3] = 0;
-      vels[i * 3 + 1] = 0;
-      vels[i * 3 + 2] = 0;
+      sphere[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      sphere[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      sphere[i * 3 + 2] = radius * Math.cos(phi);
+      curr[i * 3] = sphere[i * 3];
+      curr[i * 3 + 1] = sphere[i * 3 + 1];
+      curr[i * 3 + 2] = sphere[i * 3 + 2];
+      vels[i * 3] = 0; vels[i * 3 + 1] = 0; vels[i * 3 + 2] = 0;
     }
-    return [orig, curr, vels];
-  }, []);
+    return [sphere, logo, curr, vels];
+  }, [particleCount, isMobile]);
 
   const tempVec = useMemo(() => new THREE.Vector3(), []);
 
@@ -56,81 +96,79 @@ const InteractiveShatterSphere = () => {
     if (!pointsRef.current) return;
 
     const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
+    const scrollMax = 900;
+    const rawProgress = Math.min(scrollY, scrollMax) / scrollMax;
+    const transitionProgress = rawProgress < 0.5
+      ? 16 * Math.pow(rawProgress, 5)
+      : 1 - Math.pow(-2 * rawProgress + 2, 5) / 2;
 
-    // Get mouse world position at z=0 (depth of the sphere's origin roughly)
+    // Responsive target alignment
+    const targetX = isMobile ? 0 : transitionProgress * -4.5;
+    const targetY = isMobile ? (transitionProgress * -5) : 0; // Glide down on mobile
+
+    pointsRef.current.position.x = THREE.MathUtils.lerp(pointsRef.current.position.x, targetX, 0.12);
+    pointsRef.current.position.y = THREE.MathUtils.lerp(pointsRef.current.position.y, targetY, 0.12);
+
+    const rotationSpeed = 0.001 * Math.max(0, 1 - transitionProgress * 1.5);
+    pointsRef.current.rotation.y += rotationSpeed;
+
     tempVec.set(
       (state.mouse.x * state.viewport.width) / 2,
       (state.mouse.y * state.viewport.height) / 2,
       0
     );
-
-    // Precisely convert mouse world position to pointsRef local position
-    // This handles all parent transforms (scroll, Float, etc.) automatically
     pointsRef.current.worldToLocal(tempVec);
+
     const mx = tempVec.x;
     const my = tempVec.y;
     const mz = tempVec.z;
-
-    // Precise transition logic: move sphere to the left as we scroll
-    // Clamp scroll for the sphere position so it 'freezes' after transition
-    // We want it to glide horizontally but NOT move down.
-    const clampedScroll = Math.min(scrollY, 600); // Shorter transition for 1vh-ish sections
-    const transitionProgress = clampedScroll / 600;
-    const targetX = transitionProgress * -4.2; // Move further left
-    const targetY = 0; // Keep vertically centered in the fixed container
-
-    // Smooth lerp to targets
-    pointsRef.current.position.x = THREE.MathUtils.lerp(pointsRef.current.position.x, targetX, 0.1);
-    pointsRef.current.position.y = THREE.MathUtils.lerp(pointsRef.current.position.y, targetY, 0.1);
-    pointsRef.current.rotation.y += 0.001;
+    const rSq = Math.pow(1.8 + (transitionProgress * 0.7), 2);
 
     for (let i = 0; i < particleCount; i++) {
       const idx = i * 3;
-
       const px = positions[idx];
       const py = positions[idx + 1];
       const pz = positions[idx + 2];
 
-      // Calculate distance to local mouse position
+      // Optimized Interaction: Bounding box check before distance calculation
       const dx = px - mx;
       const dy = py - my;
       const dz = pz - mz;
-      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-      // Interaction radius - Reduced for a more subtle effect
-      const interactRadius = 1.8;
-
-      if (dist < interactRadius) {
-        // Shatter effect: push away - Reduced force
-        const force = (interactRadius - dist) / interactRadius;
-        const push = force * 0.25;
-
-        velocities[idx] += (dx / dist) * push;
-        velocities[idx + 1] += (dy / dist) * push;
-        velocities[idx + 2] += (dz / dist) * push;
+      if (Math.abs(dx) < 2.5 && Math.abs(dy) < 2.5) { // Cheap pre-check
+        const distSq = dx * dx + dy * dy + dz * dz;
+        if (distSq < rSq) {
+          const d = Math.sqrt(distSq);
+          const force = (Math.sqrt(rSq) - d) / Math.sqrt(rSq);
+          const push = force * 0.3;
+          velocities[idx] += (dx / d) * push;
+          velocities[idx + 1] += (dy / d) * push;
+          velocities[idx + 2] += (dz / d) * push;
+        }
       }
 
-      // Return force (Rebuild)
-      const rx = originalPositions[idx] - px;
-      const ry = originalPositions[idx + 1] - py;
-      const rz = originalPositions[idx + 2] - pz;
+      const tX = THREE.MathUtils.lerp(spherePositions[idx], logoPositions[idx], transitionProgress);
+      const tY = THREE.MathUtils.lerp(spherePositions[idx + 1], logoPositions[idx + 1], transitionProgress);
+      const tZ = THREE.MathUtils.lerp(spherePositions[idx + 2], logoPositions[idx + 2], transitionProgress);
 
-      velocities[idx] += rx * 0.04;
-      velocities[idx + 1] += ry * 0.04;
-      velocities[idx + 2] += rz * 0.04;
+      velocities[idx] += (tX - px) * 0.08;
+      velocities[idx + 1] += (tY - py) * 0.08;
+      velocities[idx + 2] += (tZ - pz) * 0.08;
 
-      // Friction
-      velocities[idx] *= 0.88;
-      velocities[idx + 1] *= 0.88;
-      velocities[idx + 2] *= 0.88;
+      velocities[idx] *= 0.82;
+      velocities[idx + 1] *= 0.82;
+      velocities[idx + 2] *= 0.82;
 
-      // Update positions
       positions[idx] += velocities[idx];
       positions[idx + 1] += velocities[idx + 1];
       positions[idx + 2] += velocities[idx + 2];
     }
 
     pointsRef.current.geometry.attributes.position.needsUpdate = true;
+
+    const material = pointsRef.current.material as THREE.PointsMaterial;
+    material.size = (isMobile ? 0.03 : 0.04) + (transitionProgress * 0.016);
+    material.opacity = 0.85 + (transitionProgress * 0.1);
   });
 
   return (
