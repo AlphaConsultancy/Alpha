@@ -98,15 +98,15 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const form = e.target as HTMLFormElement;
-    const body = new URLSearchParams(new FormData(form) as any).toString();
-
     try {
-      await fetch("/", {
+      const response = await fetch("/.netlify/functions/submit-contact", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) throw new Error('Submission failed');
+
       alert("Success! High-impact consultation request received. Our team will contact you within 24 hours.");
       setFormData({
         firstName: "", lastName: "", email: "", phone: "",
@@ -114,7 +114,7 @@ const Contact = () => {
         mode: "", message: "", agree: false,
       });
     } catch (error) {
-      alert("Mission error: Could not transmit data. Please try again or direct-dial us.");
+      alert("Mission error: Could not transmit data to database. Please try again or direct-dial us.");
     }
   };
 
@@ -183,13 +183,9 @@ const Contact = () => {
                 <h2 className="font-display text-3xl font-black text-foreground mb-8 tracking-tighter">Strategic Session <span className="text-primary italic">Request</span></h2>
 
                 <form
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
-                  <input type="hidden" name="form-name" value="contact" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className={labelClass}>First Name</label>
