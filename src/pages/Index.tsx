@@ -46,7 +46,9 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center">
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <Hero3DScene />
+          <Suspense fallback={<div className="bg-background w-full h-full" />}>
+            <Hero3DScene />
+          </Suspense>
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-background z-[1] pointer-events-none" />
         <div className="relative z-10 container mx-auto px-4 md:px-8 text-center pt-20 pointer-events-none">

@@ -50,3 +50,11 @@ desktop.ini
 # Project Specific
 .gemini
 tmp
+
+# Local Netlify folder
+.netlify
+.netlify-cli
+.env.local.sample
+
+# Vite
+*.timestamp-*

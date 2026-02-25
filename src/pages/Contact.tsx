@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock, Target, FileText, Lightbulb, BarChart3, Handshake, CalendarClock } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
@@ -114,7 +115,7 @@ const Contact = () => {
         mode: "", message: "", agree: false,
       });
     } catch (error) {
-      alert("Mission error: Could not transmit data to database. Please try again or direct-dial us.");
+      alert("Submission error: Could not transmit data. Please try again or direct-dial us.");
     }
   };
 
@@ -269,9 +270,12 @@ const Contact = () => {
                         checked={formData.agree} onChange={(e) => setFormData({ ...formData, agree: e.target.checked })} />
                       {formData.agree && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3 h-3 bg-primary rounded-[2px]" />}
                     </div>
-                    <span className="text-[13px] text-muted-foreground font-medium group-hover/label:text-foreground transition-colors">
-                      Acknowledged Strategic Terms & Privacy Policy
-                    </span>
+                    <label
+                      htmlFor="terms"
+                      className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-muted-foreground/60"
+                    >
+                      Acknowledged Strategic Terms & <Link to="/privacy" className="text-primary hover:underline transition-all">Privacy Policy</Link>
+                    </label>
                   </label>
 
                   <button type="submit" className="group relative w-full py-5 bg-primary text-primary-foreground rounded-2xl font-display font-black text-lg shadow-2xl shadow-primary/30 overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98]">
