@@ -1,9 +1,32 @@
 import { useState, useRef } from "react";
+import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Users, BarChart3, Target, Globe, Handshake, Star, Play, Pause } from "lucide-react";
+import {
+  ArrowRight, Users, BarChart3, Target, Globe, Handshake, Star,
+  Play, Pause, ShieldCheck, Zap, Sparkles, Heart, Rocket
+} from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
-import { ShieldCheck, Zap, Sparkles, Heart, Rocket } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface GalleryImage {
+  src: string;
+}
+
+const galleryImages: GalleryImage[] = [
+  { src: "1.webp" },
+  { src: "2.webp" },
+  { src: "3.webp" },
+  { src: "4.webp" },
+  { src: "5.webp" },
+  { src: "6.webp" },
+  { src: "7.webp" },
+  { src: "8.webp" },
+  { src: "9.webp" },
+  { src: "10.webp" },
+  { src: "11.webp" },
+  { src: "12.webp" }
+];
 
 const values = [
   { icon: <ShieldCheck className="text-primary-foreground" />, title: "Integrity", text: "Integrity in every interaction" },
@@ -12,6 +35,35 @@ const values = [
   { icon: <Sparkles className="text-primary-foreground" />, title: "Innovation", text: "Innovation in career solutions" },
   { icon: <Rocket className="text-primary-foreground" />, title: "Success", text: "Commitment to client success" },
 ];
+
+const ImageWithSkeleton = ({ src, alt, index }: { src: string; alt: string; index: number }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05 }}
+      className="aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden border border-white/10 relative group shadow-lg bg-white/5"
+    >
+      {!isLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-[24px] md:rounded-[32px]" />}
+      <img
+        src={src.replace(/\.(jpg|jpeg|JPG)$/, '.webp')}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setIsLoaded(true)}
+        className={cn(
+          "w-full h-full object-cover transition-all duration-700 group-hover:scale-110",
+          isLoaded ? "opacity-100" : "opacity-0"
+        )}
+        alt={alt}
+      />
+      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    </motion.div>
+  );
+};
+
 
 
 
@@ -243,14 +295,14 @@ const About = () => {
                 role: "Co-Founder & CEO",
                 desc: "Visionary leader with over 15 years of experience in career counseling and organizational development.",
                 tags: ["Career Strategy", "Leadership Development", "Business Growth"],
-                img: "https://alphaconsultancyinc.com/Assets/images/Team/Aftab_barkat.png",
+                img: "./Aftab_barkat.png",
               },
               {
                 name: "Sabia Barkat",
                 role: "Co-Founder & COO",
                 desc: "Expert in educational consulting and student development with a passion for empowering young minds.",
                 tags: ["Education Consulting", "Student Development", "Academic Planning"],
-                img: "https://alphaconsultancyinc.com/Assets/images/Team/Sabia_Barkat.png",
+                img: "./Sabia_Barkat.png",
               },
             ].map((founder, i) => (
               <motion.div
@@ -290,147 +342,69 @@ const About = () => {
             description="Moments of professional transformation and corporate excellence."
           />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-6 auto-rows-[160px] md:auto-rows-[180px] lg:auto-rows-[200px]">
-            {/* Top Row Images */}
+          <div className="flex flex-col xl:flex-row gap-8 items-start">
+            {/* Left Column: Standing Portrait Video */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="col-span-1 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional workshop at Alpha Consultancy office in Ahmedabad" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="col-span-1 lg:col-span-6 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Team meeting and collaboration session at Alpha Consultancy" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="col-span-2 lg:col-span-3 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Alpha Consultancy success story: individual achieving career goals" />
-            </motion.div>
-
-            {/* Middle Row: Left Images + Central Video + Right Images */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4"
-            >
-              <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Corporate training session for job placement in Ahmedabad" />
-              </div>
-              <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Alpha Consultancy resource center training students for future jobs" />
-              </div>
-            </motion.div>
-
-            {/* Central Video Anchor - Prominent Standing Portrait Layout */}
-            <motion.div
-              initial={{ opacity: 0, scale: 1.1 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-4 rounded-[32px] md:rounded-[40px] overflow-hidden border border-primary/20 bg-black relative group cursor-pointer shadow-2xl shadow-primary/10"
+              className="w-full xl:w-1/3 aspect-[3/4] xl:aspect-[2/3] rounded-[40px] overflow-hidden border-2 border-primary/30 bg-black/40 backdrop-blur-sm relative group cursor-pointer shadow-[0_0_50px_rgba(6,182,212,0.15)]"
               onClick={togglePlay}
             >
+              {/* Combined Logo & Play Placeholder */}
+              <AnimatePresence>
+                {!isPlaying && (
+                  <motion.div
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 p-12"
+                  >
+                    <div className="relative group/logo">
+                      <img
+                        src="/logo.jpg"
+                        alt="Alpha Consultancy Logo"
+                        className="w-full max-w-[480px] h-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-700 rounded-3xl"
+                      />
+                      {/* Integrated Play Button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-full bg-primary/30 backdrop-blur-xl flex items-center justify-center border border-white/40 group-hover:scale-110 group-hover:bg-primary/50 transition-all duration-500 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                          <Play fill="white" className="text-white ml-2 w-8 h-8" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <video
                 ref={videoRef}
                 src="/Alpha-Consultancy.mp4"
-                className={`w-full h-full object-cover transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-60 group-hover:scale-105 group-hover:opacity-40'}`}
+                className={`w-full h-full object-contain relative z-0 transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
                 preload="metadata"
                 muted
                 loop
                 playsInline
               />
 
-              <AnimatePresence>
-                {!isPlaying && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0 flex items-center justify-center bg-black/20"
-                  >
-                    <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-primary/20 backdrop-blur-xl flex items-center justify-center border border-white/30 group-hover:scale-110 group-hover:bg-primary/40 transition-all duration-500 shadow-2xl">
-                      <Play fill="white" className="text-white ml-2 w-8 h-8 md:w-12 md:h-12" />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {isPlaying && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  className="absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity"
-                >
-                  <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                    <Pause fill="white" className="text-white w-6 h-6" />
-                  </div>
-                </motion.div>
-              )}
-
-              <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-60 group-hover:opacity-100'}`}>
-                <span className="text-[10px] uppercase tracking-widest font-bold text-white">Success Journey</span>
+              <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
+                <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white bg-primary/80 px-4 py-1.5 rounded-full">Success Journey</span>
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="col-span-2 lg:col-span-4 lg:row-span-4 row-span-2 flex flex-col md:flex-row lg:flex-col gap-4 md:gap-6"
-            >
-              <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Modern office environment for high-end professional development" />
+            {/* Right Column: 12 Image Grid */}
+            <div className="w-full xl:w-2/3">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-fr">
+                {galleryImages.map((img, i) => (
+                  <ImageWithSkeleton
+                    key={i}
+                    src={`/Gallery_grid_images/${img.src}`}
+                    alt={`Alpha Consultancy Impact ${i + 1}`}
+                    index={i}
+                  />
+                ))}
               </div>
-              <div className="flex-1 rounded-3xl overflow-hidden border border-white/5 relative group">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Leadership coaching and career navigation with Alpha Consultancy" />
-              </div>
-            </motion.div>
-
-            {/* Bottom Row Images (Mixed aspect ratios) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1454165833202-d196c735afe1?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Data-driven career analysis at Alpha Consultancy" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="col-span-1 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Community support and networking at Alpha Consultancy" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="col-span-2 lg:col-span-4 lg:row-span-1 rounded-3xl overflow-hidden border border-white/5 relative group"
-            >
-              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200" className="w-full h-full object-cover grayscale brightness-50 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" alt="Professional presentation on career strategies with Alpha Consultancy mentors" />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

@@ -89,8 +89,22 @@ const ContactCard = ({ children, className = "" }: { children: React.ReactNode, 
   );
 };
 
+interface ContactFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  ageGroup: string;
+  consultationType: string;
+  date: string;
+  time: string;
+  mode: string;
+  message: string;
+  agree: boolean;
+}
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     firstName: "", lastName: "", email: "", phone: "",
     ageGroup: "", consultationType: "", date: "", time: "",
     mode: "", message: "", agree: false,
