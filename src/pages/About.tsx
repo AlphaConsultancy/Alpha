@@ -14,18 +14,18 @@ interface GalleryImage {
 }
 
 const galleryImages: GalleryImage[] = [
-  { src: "1.webp" },
-  { src: "2.webp" },
-  { src: "3.webp" },
-  { src: "4.webp" },
-  { src: "5.webp" },
-  { src: "6.webp" },
-  { src: "7.webp" },
-  { src: "8.webp" },
-  { src: "9.webp" },
-  { src: "10.webp" },
-  { src: "11.webp" },
-  { src: "12.webp" }
+  { src: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800" },
+  { src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800" }
 ];
 
 const values = [
@@ -49,7 +49,7 @@ const ImageWithSkeleton = ({ src, alt, index }: { src: string; alt: string; inde
     >
       {!isLoaded && <Skeleton className="absolute inset-0 w-full h-full rounded-[24px] md:rounded-[32px]" />}
       <img
-        src={src.replace(/\.(jpg|jpeg|JPG)$/, '.webp')}
+        src={src.startsWith('http') ? src : src.replace(/\.(jpg|jpeg|JPG)$/, '.webp')}
         loading="lazy"
         decoding="async"
         onLoad={() => setIsLoaded(true)}
@@ -161,7 +161,7 @@ const About = () => {
                 <h3 className="font-display text-3xl font-bold text-white mb-4">The Alpha Edge</h3>
                 <p className="font-body text-white/70 leading-relaxed mb-8">
                   We don't just point you in a direction. We build the engine that takes you there.
-                  98% success rate across 500+ global partners.
+                  98% success rate across global partners.
                 </p>
 
                 <ul className="space-y-4">
@@ -295,14 +295,14 @@ const About = () => {
                 role: "Co-Founder & CEO",
                 desc: "Visionary leader with over 15 years of experience in career counseling and organizational development.",
                 tags: ["Career Strategy", "Leadership Development", "Business Growth"],
-                img: "./Aftab_barkat.png",
+                img: "./Aftab_barkat.jpg",
               },
               {
                 name: "Sabia Barkat",
                 role: "Co-Founder & COO",
                 desc: "Expert in educational consulting and student development with a passion for empowering young minds.",
                 tags: ["Education Consulting", "Student Development", "Academic Planning"],
-                img: "./Sabia_Barkat.png",
+                img: "./Sabia_Barkat.jpg",
               },
             ].map((founder, i) => (
               <motion.div
@@ -398,7 +398,7 @@ const About = () => {
                 {galleryImages.map((img, i) => (
                   <ImageWithSkeleton
                     key={i}
-                    src={`/Gallery_grid_images/${img.src}`}
+                    src={img.src}
                     alt={`Alpha Consultancy Impact ${i + 1}`}
                     index={i}
                   />
