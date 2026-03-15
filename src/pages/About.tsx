@@ -19,13 +19,7 @@ const galleryImages: GalleryImage[] = [
   { src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=800" },
   { src: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=800" },
   { src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800" },
-  { src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800" }
+  { src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=800" }
 ];
 
 const values = [
@@ -67,7 +61,7 @@ const ImageWithSkeleton = ({ src, alt, index }: { src: string; alt: string; inde
 
 
 
-const About = () => {
+const VideoCard = ({ index, videoSrc }: { index: number; videoSrc: string }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -82,6 +76,58 @@ const About = () => {
       setIsPlaying(!isPlaying);
     }
   };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="w-full h-full rounded-[40px] overflow-hidden border-2 border-primary/30 bg-black/40 backdrop-blur-sm relative group cursor-pointer shadow-[0_0_50px_rgba(6,182,212,0.15)] min-h-[500px]"
+      onClick={togglePlay}
+    >
+      <AnimatePresence>
+        {!isPlaying && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 p-12"
+          >
+            <div className="relative group/logo">
+              <img
+                src="/logo.jpg"
+                alt="Alpha Consultancy Logo"
+                className="w-full max-w-[480px] h-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-700 rounded-3xl"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/30 backdrop-blur-xl flex items-center justify-center border border-white/40 group-hover:scale-110 group-hover:bg-primary/50 transition-all duration-500 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                  <Play fill="white" className="text-white ml-1 w-6 h-6 md:w-8 md:h-8" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        className={`w-full h-full object-cover relative z-0 transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
+        preload="metadata"
+        muted
+        loop
+        playsInline
+      />
+
+      <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
+        <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] font-black text-white bg-primary/80 px-4 py-1.5 rounded-full">Success Journey</span>
+      </div>
+    </motion.div>
+  );
+};
+
+const About = () => {
 
   return (
     <div className="min-h-screen bg-background pt-24">
@@ -342,59 +388,17 @@ const About = () => {
             description="Moments of professional transformation and corporate excellence."
           />
 
-          <div className="flex flex-col xl:flex-row gap-8 items-start">
-            {/* Left Column: Standing Portrait Video */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="w-full xl:w-1/3 aspect-[3/4] xl:aspect-[2/3] rounded-[40px] overflow-hidden border-2 border-primary/30 bg-black/40 backdrop-blur-sm relative group cursor-pointer shadow-[0_0_50px_rgba(6,182,212,0.15)]"
-              onClick={togglePlay}
-            >
-              {/* Combined Logo & Play Placeholder */}
-              <AnimatePresence>
-                {!isPlaying && (
-                  <motion.div
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 p-12"
-                  >
-                    <div className="relative group/logo">
-                      <img
-                        src="/logo.jpg"
-                        alt="Alpha Consultancy Logo"
-                        className="w-full max-w-[480px] h-auto object-contain opacity-60 group-hover:opacity-100 transition-all duration-700 rounded-3xl"
-                      />
-                      {/* Integrated Play Button */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-20 h-20 rounded-full bg-primary/30 backdrop-blur-xl flex items-center justify-center border border-white/40 group-hover:scale-110 group-hover:bg-primary/50 transition-all duration-500 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
-                          <Play fill="white" className="text-white ml-2 w-8 h-8" />
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <video
-                ref={videoRef}
-                src="/Alpha-Consultancy.mp4"
-                className={`w-full h-full object-contain relative z-0 transition-all duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
-                preload="metadata"
-                muted
-                loop
-                playsInline
-              />
-
-              <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
-                <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white bg-primary/80 px-4 py-1.5 rounded-full">Success Journey</span>
+          <div className="flex flex-col xl:flex-row gap-6 items-stretch pt-4">
+            {/* Left Column: Video 1 */}
+            <div className="w-full xl:w-[35%]">
+              <div className="h-full">
+                <VideoCard index={0} videoSrc="/Alpha-Consultancy.mp4" />
               </div>
-            </motion.div>
+            </div>
 
-            {/* Right Column: 12 Image Grid */}
-            <div className="w-full xl:w-2/3">
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-fr">
+            {/* Middle Column: 6 Image Grid (2 columns) */}
+            <div className="w-full xl:w-[30%]">
+              <div className="grid grid-cols-2 gap-4 md:gap-6 h-full auto-rows-fr">
                 {galleryImages.map((img, i) => (
                   <ImageWithSkeleton
                     key={i}
@@ -403,6 +407,13 @@ const About = () => {
                     index={i}
                   />
                 ))}
+              </div>
+            </div>
+
+            {/* Right Column: Video 2 */}
+            <div className="w-full xl:w-[35%]">
+              <div className="h-full">
+                <VideoCard index={1} videoSrc="/Alpha-Consultancy 2.mp4" />
               </div>
             </div>
           </div>
